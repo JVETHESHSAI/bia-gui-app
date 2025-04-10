@@ -13,7 +13,7 @@ uploaded_file = st.sidebar.file_uploader("Upload CSV or Excel file", type=["csv"
 # Load trained model
 @st.cache_resource
 def load_model():
-    return joblib.load("model.pkl")  # Make sure your model file is in the same folder
+    return joblib.load("model.pkl")  # Make sure model.pkl is in the same directory as this script
 
 model = load_model()
 
@@ -38,10 +38,10 @@ if uploaded_file:
             formula = f"{disease_column} ~ " + " + ".join(independent_vars)
             model_anova = sm.formula.ols(formula, data=df).fit()
             anova_table = sm.stats.anova_lm(model_anova, typ=2)
-            st.success("ANOVA Completed!")
+            st.success("✅ ANOVA Completed!")
             st.dataframe(anova_table)
         except Exception as e:
-            st.error(f"Error in ANOVA: {e}")
+            st.error(f"❌ Error in ANOVA: {e}")
 
     # Composition info
     st.header("📋 Disease Composition Information")
